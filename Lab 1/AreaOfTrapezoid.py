@@ -1,0 +1,1 @@
+print("The area is: ", (1/2)*(float(input("Enter trapezoid length of bottom: ")) + float(input("Enter trapezoid length of top: ")))*float(input("Enter trapezoid height: ")))
