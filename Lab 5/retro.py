@@ -50,14 +50,56 @@ while not done:
         for y in range(0, 250, 1):
             pygame.draw.rect(screen, MixColor(BACKGROUND_BOTTOM_COLOR, BACKGROUND_TOP_COLOR, (1/250)*y), (0,y,700,5))
 
-        # GRADIENT DRAW GRASS
+        ##
+        ## SUN
+        ##
+
+        pygame.draw.circle(screen, SUN_COLOR, (225, 125), 45)
+
+        ###
+        ### BUILDINGS
+        ###
+
+        pygame.draw.rect(screen, BUILDINGS_FOUR_COLOR, (5, 150, 125, 195))
+        pygame.draw.rect(screen, BUILDINGS_FOUR_COLOR, (285, 100, 115, 500))
+        pygame.draw.rect(screen, BUILDINGS_FOUR_COLOR, (420, 200, 90, 175))
+        pygame.draw.rect(screen, BUILDINGS_FOUR_COLOR, (575, 115, 150, 225))
+
+        pygame.draw.rect(screen, BUILDINGS_THREE_COLOR, (0, 225, 100, 195))
+        pygame.draw.rect(screen, BUILDINGS_THREE_COLOR, (325, 125, 115, 500))
+        pygame.draw.rect(screen, BUILDINGS_THREE_COLOR, (210, 185, 90, 175))
+        pygame.draw.rect(screen, BUILDINGS_THREE_COLOR, (500, 140, 150, 225))
+
+        pygame.draw.rect(screen, BUILDINGS_TWO_COLOR, (50, 200, 100, 195))
+        pygame.draw.rect(screen, BUILDINGS_TWO_COLOR, (300, 250, 115, 150))
+        pygame.draw.rect(screen, BUILDINGS_TWO_COLOR, (200, 300, 90, 175))
+        pygame.draw.rect(screen, BUILDINGS_TWO_COLOR, (600, 150, 150, 225))
+
+        pygame.draw.rect(screen, BUILDINGS_ONE_COLOR, (10, 180, 100, 195))
+        pygame.draw.rect(screen, BUILDINGS_ONE_COLOR, (125, 225, 115, 150))
+        pygame.draw.rect(screen, BUILDINGS_ONE_COLOR, (290, 200, 90, 175))
+        pygame.draw.rect(screen, BUILDINGS_ONE_COLOR, (475, 175, 150, 225))
+
+
+         # GRADIENT DRAW GRASS
         for y in range(375, 500, 1):
             pygame.draw.rect(screen, MixColor(GRASS_CLOSE_COLOR, GRASS_FAR_COLOR, (1/125)*(y-375)), (0,y,700,5))
 
+        ##
+        ## ROAD
+        ##
+
         pygame.draw.polygon(screen, ROAD_COLOR, ((400,375), (300,375), (100,500), (600,500)))
+
         pygame.draw.polygon(screen, ROAD_STRIPS_COLOR, ((395,375), (392,375), (585,500), (595,500)))
         pygame.draw.polygon(screen, ROAD_STRIPS_COLOR, ((305,375), (308,375), (115,500), (105,500)))
-    
+
+        pygame.draw.polygon(screen, ROAD_STRIPS_COLOR, ((365, 500), (335, 500), (345, 425), (355, 425)))
+
+        pygame.draw.polygon(screen, ROAD_STRIPS_COLOR, ((349, 380), (351, 380), (352, 400), (347, 400)))
+
+        
+
     pygame.display.flip()
 
     clock.tick(60)
