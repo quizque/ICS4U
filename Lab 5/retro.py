@@ -1,4 +1,5 @@
 import pygame
+import random
  
 pygame.init()
 
@@ -20,6 +21,8 @@ BACKGROUND_BOTTOM_COLOR = (254, 190, 162)
 BACKGROUND_TOP_COLOR    = (170, 147, 203)
 
 SUN_COLOR = (255, 255, 255)
+
+STAR_COLOR = (218, 211, 222)
 
 GRASS_CLOSE_COLOR = (30, 88, 107)
 GRASS_FAR_COLOR   = (24, 70, 85)
@@ -50,6 +53,10 @@ while not done:
         for y in range(0, 250, 1):
             pygame.draw.rect(screen, MixColor(BACKGROUND_BOTTOM_COLOR, BACKGROUND_TOP_COLOR, (1/250)*y), (0,y,700,5))
 
+        # DRAW STARS
+        for y in range(0,35):
+            pygame.draw.circle(screen, STAR_COLOR, (random.randint(0,750), random.randint(0,250)), 2)
+
         ##
         ## SUN
         ##
@@ -79,6 +86,21 @@ while not done:
         pygame.draw.rect(screen, BUILDINGS_ONE_COLOR, (125, 225, 115, 150))
         pygame.draw.rect(screen, BUILDINGS_ONE_COLOR, (290, 200, 90, 175))
         pygame.draw.rect(screen, BUILDINGS_ONE_COLOR, (475, 175, 150, 225))
+
+        pygame.draw.rect(screen, LIGHT_ONE_COLOR, (20, 195, 4, 8))
+        pygame.draw.rect(screen, LIGHT_ONE_COLOR, (30, 195, 4, 8))
+        pygame.draw.rect(screen, LIGHT_ONE_COLOR, (20, 210, 4, 8))
+        pygame.draw.rect(screen, LIGHT_ONE_COLOR, (50, 210, 4, 8))
+
+        pygame.draw.rect(screen, LIGHT_TWO_COLOR, (150, 275, 4, 8))
+        pygame.draw.rect(screen, LIGHT_TWO_COLOR, (160, 275, 4, 8))
+        pygame.draw.rect(screen, LIGHT_TWO_COLOR, (170, 255, 4, 8))
+        pygame.draw.rect(screen, LIGHT_TWO_COLOR, (190, 255, 4, 8))
+
+        pygame.draw.rect(screen, LIGHT_THREE_COLOR, (300, 225, 4, 8))
+        pygame.draw.rect(screen, LIGHT_THREE_COLOR, (325, 275, 4, 8))
+        pygame.draw.rect(screen, LIGHT_THREE_COLOR, (325, 255, 4, 8))
+        pygame.draw.rect(screen, LIGHT_THREE_COLOR, (300, 255, 4, 8))
 
 
          # GRADIENT DRAW GRASS
