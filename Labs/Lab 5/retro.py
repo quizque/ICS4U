@@ -6,11 +6,19 @@ pygame.init()
 screen = pygame.display.set_mode((700, 500))
  
 pygame.display.set_caption("Retro")
- 
+
+# Is program finished?
 done = False
+
+# Internal clock
 clock = pygame.time.Clock()
 
+# Draw everything once to save CPU time
 drawn_once = False
+
+###
+### COLOR CONSTANTS
+###
 
 BUILDINGS_ONE_COLOR   = (12, 5, 36)
 BUILDINGS_TWO_COLOR   = (25, 12, 58)
@@ -34,6 +42,14 @@ LIGHT_ONE_COLOR   = (200, 141, 182)
 LIGHT_TWO_COLOR   = (110, 110, 184)
 LIGHT_THREE_COLOR = (24, 67, 80)
 
+
+# Calculate the mix of two colors
+# INPUTS
+#   - Color One (list)
+#   - Color Two (list)
+#   - Percent (float)
+# OUTPUT
+#   - Color (list)
 def MixColor(Color1, Color2, percent):
     r = (Color1[0]-Color2[0])*percent + Color2[0]
     g = (Color1[1]-Color2[1])*percent + Color2[1]
@@ -87,6 +103,10 @@ while not done:
         pygame.draw.rect(screen, BUILDINGS_ONE_COLOR, (290, 200, 90, 175))
         pygame.draw.rect(screen, BUILDINGS_ONE_COLOR, (475, 175, 150, 225))
 
+        ###
+        ### LIGHTS
+        ###
+
         pygame.draw.rect(screen, LIGHT_ONE_COLOR, (20, 195, 4, 8))
         pygame.draw.rect(screen, LIGHT_ONE_COLOR, (30, 195, 4, 8))
         pygame.draw.rect(screen, LIGHT_ONE_COLOR, (20, 210, 4, 8))
@@ -119,10 +139,10 @@ while not done:
         pygame.draw.polygon(screen, ROAD_STRIPS_COLOR, ((365, 500), (335, 500), (345, 425), (355, 425)))
 
         pygame.draw.polygon(screen, ROAD_STRIPS_COLOR, ((349, 380), (351, 380), (352, 400), (347, 400)))
-
         
-
-    pygame.display.flip()
+        pygame.draw.polygon(screen, (255,0,0), [[50,100],[0,200],[200,200],[100,50]], 5)
+        
+        pygame.display.flip()
 
     clock.tick(60)
 
