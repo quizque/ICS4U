@@ -29,8 +29,6 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
 
-    
-
     screen.fill((0,25,0))
 
     all_sprites_list.draw(screen)
