@@ -32,7 +32,9 @@ while not done:
     screen.fill((0,25,0))
 
     all_sprites_list.draw(screen)
-    
+    MOUSE = pygame.mouse.get_pos()
+    if mainAct.inRange([MOUSE[0], MOUSE[1]]) and pygame.mouse.get_pressed:
+        print("WORKING!!!!")
 
     pygame.display.flip()
     

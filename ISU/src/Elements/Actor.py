@@ -30,3 +30,9 @@ class Actor(pygame.sprite.Sprite):
         # Recalculate the position
         self.rect[0] = _position[0] - (self.rect[2]//2)
         self.rect[1] = _position[1] - (self.rect[3]//2)
+
+    def inRange(_position):
+        if (self.rect[0] <= _position[0] <= (self.rect[0] + self.rect[2])):
+            if (self.rect[1] <= _position[1] <= (self.rect[1] + self.rect[3])):
+                return True
+        return False
