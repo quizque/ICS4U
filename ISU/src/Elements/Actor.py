@@ -14,9 +14,9 @@ class Actor(pygame.sprite.Sprite):
         # Initialize the sprite class
         super().__init__()
         
-        # Define the position, scale, and rotation of the actor
-        self.position = _position
+        # Define the scale of the actor
         self.scale = _scale
+        
         self.expression_list = []
 
         for image_path in _expression_list:
@@ -26,3 +26,7 @@ class Actor(pygame.sprite.Sprite):
 
         self.image = self.expression_list[EXPRESSION_DEFAULT]
         self.rect = self.image.get_rect()
+
+        # Recalculate the position
+        self.rect[0] = _position[0] - (self.rect[2]//2)
+        self.rect[1] = _position[1] - (self.rect[3]//2)

@@ -19,7 +19,7 @@ all_sprites_list = pygame.sprite.Group()
 
 
 
-mainAct = actor.Actor((500,500), 0.5, ["p.png"])
+mainAct = actor.Actor((config.SCREEN_SIZE[0]//2,config.SCREEN_SIZE[1]//2), 2, ["p.png"])
 
 all_sprites_list.add(mainAct)
 
