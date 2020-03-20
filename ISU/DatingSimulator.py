@@ -1,35 +1,22 @@
 import pygame
 from pygame.locals import *
-import sys, os, math
-
-# Config ----------------------------------------------------------#
-
-MAX_ACTOR_HEIGHT = 658
-
-# Setup PyGame window ---------------------------------------------#
-
-# Setup pygame
-pygame.init()
-
-# Define window size and title
-screen = pygame.display.set_mode((1170, 658))
-pygame.display.set_caption('Dating Simulator')
-
-# Define main clock
-clock = pygame.time.Clock()
+import data.engine as e
+import sys
 
 # Load game assets ------------------------------------------------#
 
-def load_actor(img):
-    actor = {}
-    for file in os.listdir("data/images"):
-        if file.startswith(img):
-            tmp = pygame.image.load("data/images/" + file).convert_alpha()
-            tmp = pygame.transform.scale(tmp, (math.ceil((MAX_ACTOR_HEIGHT/tmp.get_size()[1])*tmp.get_size()[0]),MAX_ACTOR_HEIGHT))
-            actor[file.split("_")[len(file.split("_"))-1][:-4]] = tmp
-    return actor
+boy = e.load_actor("boy")
+girl = e.load_actor("girl")
 
-boy = load_actor("boy")
+e._active_actors.append(boy["default"])
+e._active_actors.append(girl["mad"])
+
+music = e.load_audio("music", 0.05)
+
+background = e.load_background("hallway")
+e._current_background = background
+
+music.play()
 
 # Main game loop --------------------------------------------------#
 
@@ -42,8 +29,10 @@ while True:
             if event.key == K_ESCAPE:
                 pygame.quit()
 
-    screen.blit(boy["mad"], (250,250))
+    e.draw_active_background()
 
-    pygame.display.update()
+    e.draw_active_actors()
 
-    clock.tick(60)
+    e.draw_text_dialogbox("hoe", "this man")
+
+    e.update()
