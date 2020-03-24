@@ -1,5 +1,4 @@
 import pygame
-from pygame.locals import *
 import data.engine as e
 import sys
 
@@ -8,31 +7,28 @@ import sys
 boy = e.load_actor("boy")
 girl = e.load_actor("girl")
 
-e._active_actors.append(boy["default"])
-e._active_actors.append(girl["mad"])
+#e._active_actors.append(boy["default"])
+#e._active_actors.append(girl["mad"])
 
 music = e.load_audio("music", 0.05)
 
 background = e.load_background("hallway")
 e._current_background = background
 
-music.play()
+music.play(-1)
 
 # Main game loop --------------------------------------------------#
 
 while True:
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                pygame.quit()
 
-    e.draw_active_background()
-
-    e.draw_active_actors()
-
+    e.pre_update()
+    
+    e._active_actors.append(boy["default"])
     e.draw_text_dialogbox("hoe", "this man")
+    
+    e._active_actors.append(girl["mad"])
+    e.draw_text_dialogbox("hoe", "he is gay")
+    e.draw_text_dialogbox("man", "not funny")
+    e._active_actors.clear()
 
-    e.update()
+    e.post_update()
