@@ -10,7 +10,7 @@ from pygame.locals import *
 import data.mouse as m
 
 # Import other modules
-import sys, os, math
+import sys, os, math, textwrap
 
 # Config ----------------------------------------------------------#
 
@@ -132,10 +132,17 @@ def draw_text_dialogbox(actor, text):
 
         # Draw dialog box with name and text
         draw_dialogbox()
-        screen.blit(asset_namebox, (195,465))
         screen.blit(asset_arrow, (965, 615))
-        screen.blit(font_namebox.render(actor, 1, (77, 77, 77)), (200,467))
-        screen.blit(font_textbox.render(text, 1, (77, 77, 77)), (190,510))
+        
+        if not len(actor) == 0:
+            screen.blit(asset_namebox, (195,461))
+            screen.blit(font_namebox.render(actor, 1, (77, 77, 77)), (200,463))
+
+        text = textwrap.fill(text, 45)
+        c = 0
+        for part in text.split('\n'):
+            screen.blit(font_textbox.render(part, 1, (77, 77, 77)), (185,510 + 30*c))
+            c += 1
 
         # If the mouse is hovering over the "next" arrow and we haven't ran this yet
         if m.isHover_once(965, 615, asset_arrow.get_size()):
