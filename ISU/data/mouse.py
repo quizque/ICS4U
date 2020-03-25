@@ -46,3 +46,4 @@ def update():
     _hover_prev = _hover
 
     _mouse_pressed = pygame.mouse.get_pressed()[0]
+

@@ -26,6 +26,9 @@ _current_background = None
 # Active actors
 _active_actors = []
 
+# Active menu
+_active_menu = "NONE"
+
 # Setup PyGame window ---------------------------------------------#
 
 # Setup the pygame mixer
@@ -112,8 +115,6 @@ asset_namebox = load_ui_asset("namebox")
 asset_arrow   = load_ui_asset("arrow")
 font_namebox  = load_font("textbox", 30)
 font_textbox  = load_font("textbox", 30)
-audio_select  = load_audio("select")
-audio_hover   = load_audio("hover")
 
 # draw dialog box
 # **TODO** might remove
@@ -121,7 +122,7 @@ def draw_dialogbox():
     screen.blit(asset_dialog, (177,500))
 
 # display dialog box with text
-def draw_text_dialogbox(actor, text):
+def text_dialogbox(actor, text):
 
     # While user hasn't pressed next
     tmp_running = True
@@ -132,7 +133,7 @@ def draw_text_dialogbox(actor, text):
 
         # Draw dialog box with name and text
         draw_dialogbox()
-        screen.blit(asset_arrow, (965, 615))
+        screen.blit(asset_arrow, (965 - math.fabs(math.sin(math.sin(pygame.time.get_ticks()/500))*10), 615))
         
         if not len(actor) == 0:
             screen.blit(asset_namebox, (195,461))
@@ -144,23 +145,30 @@ def draw_text_dialogbox(actor, text):
             screen.blit(font_textbox.render(part, 1, (77, 77, 77)), (185,510 + 30*c))
             c += 1
 
-        # If the mouse is hovering over the "next" arrow and we haven't ran this yet
-        if m.isHover_once(965, 615, asset_arrow.get_size()):
-            # play hover audio
-            audio_hover.play()
-
         # If the mouse is in range and we have pressed the button once
-        if m.inRange(965, 615, asset_arrow.get_size()) and m.pressed_once():
-
-            # play the audio
-            audio_select.play()
-
+        if m.inRange(955, 615, asset_arrow.get_size() + (10, 0)) and m.pressed_once():
             # exit loop
             tmp_running = False
 
         # Run engine post update
         post_update()
 
+def draw_ask_dialogbox(options):
+    # While user hasn't pressed next
+    tmp_running = True
+    while tmp_running:
+
+        # Run engine pre update
+        pre_update()
+
+        # Draw dialog box with name and text
+        draw_dialogbox()
+        screen.blit(asset_arrow, (965, 615))
+        
+        
+
+        # Run engine post update
+        post_update()
 
 # Actor draw functions --------------------------------------------#
 
@@ -181,11 +189,72 @@ def draw_active_actors():
 def draw_active_background():
     screen.blit(_current_background,(0,0))
 
+# Button class ----------------------------------------------------#
+
+class UI_Button():
+    def __init__(self, pos, size):
+        self.isPressed = False
+        self.size = size
+        self.pos = pos
+        self.isHovered = False
+
+        self.isPressed_prev = False
+        self.isHovered_prev = False
+    
+    def update(self):
+        self.isPressed_prev = self.isPressed
+        self.isHovered_prev = self.isHovered
+
+        self.isPressed = m.inRange(self.pos[0], self.pos[1], self.size)
+        self.isHovered = m.isHover(self.pos[0], self.pos[1], self.size)
+
+# Menus functions -------------------------------------------------#
+
+def display_pauseMenu():
+    tmp = True
+
+    pre_update()
+
+    s = pygame.Surface((1170, 658)) 
+    s.set_alpha(175)  
+    s.fill((255,255,255))
+
+    quit_button = UI_Button((1170//2 - font_namebox.size("QUIT")[0]//2, 658//2 - font_namebox.size("QUIT")[1]//2), font_namebox.size("QUIT"))
+
+    while tmp:
+        pre_update()
+        quit_button.update()
+        
+        screen.blit(s, (0,0))
+
+
+        pygame.draw.rect(screen, (77,77,77), (398,179, 375, 300))
+        pygame.draw.rect(screen, (200,200,200), (398,179, 375, 300),10)
+
+        draw_textCenter("QUIT", font_namebox, (255,255,255), (1170//2, 658//2))
+
+        if quit_button.isPressed and pygame.mouse.get_pressed()[0]:
+            pygame.quit()
+            sys.exit()
+
+        post_update()
+
+
 # Engine functions ------------------------------------------------#
+
+def add_actor(actor):
+    _active_actors.append(actor)
+
+def clear_actors():
+    _active_actors.clear()
+
+def draw_textCenter(text, font, color, position):
+    screen.blit(font.render(text, True, color),(position[0] - font.size(text)[0]//2, position[1] - font.size(text)[1]//2))
 
 # pre update function
 # run this before drawing to the screen
 def pre_update():
+    global _active_menu
 
     # update mouse
     m.update()
@@ -196,9 +265,9 @@ def pre_update():
 
     # Pygame event check for quitting
     for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
+        if event.type == QUIT and _active_menu != "QUIT":
+            _active_menu = "QUIT"
+            display_pauseMenu()
         if event.type == KEYDOWN:
             if event.key == K_ESCAPE:
                 pygame.quit()
@@ -207,7 +276,7 @@ def pre_update():
 # run this after drawing to the screen
 def post_update():
 
-    pygame.display.update()
+    pygame.display.flip()
     clock.tick(60)
 
 
