@@ -1,3 +1,13 @@
+#********************************************************************************
+#** Nick Coombe - March 04, 2020 ***
+#** Lab 3 Create-a-Quiz ***
+#** ***
+#** Simple quiz program which will take user input and ***
+#** test it agenest pre-entered inputs to see if it right. ***
+#** Answers for multiple choice are shuffled every run. ***
+#** ***
+#********************************************************************************
+
 import random
 
 #################

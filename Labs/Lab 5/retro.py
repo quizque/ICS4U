@@ -1,3 +1,12 @@
+#********************************************************************************
+#** Nick Coombe - March 09, 2020 ***
+#** Lab 5 Create-a-Picture ***
+#** ***
+#** Draws a cityscape with random stars in the background. ***
+#** Road is drawn is polygons
+#** ***
+#********************************************************************************
+
 import pygame
 import random
  

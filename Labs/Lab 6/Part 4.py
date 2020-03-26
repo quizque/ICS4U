@@ -1,3 +1,11 @@
+#********************************************************************************
+#** Nick Coombe - March 09, 2020 ***
+#** Lab 6 Back to Looping ***
+#** ***
+#** Displays a grid ***
+#** ***
+#********************************************************************************
+
 import pygame
 
 pygame.init()
@@ -14,7 +22,7 @@ drawOnce = False
 # pygame clock
 clock = pygame.time.Clock()
 
-# pygame spacing
+# square spacing
 SQUARE_SPACING = 2
 
 # draw loop
