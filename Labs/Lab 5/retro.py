@@ -140,8 +140,6 @@ while not done:
 
         pygame.draw.polygon(screen, ROAD_STRIPS_COLOR, ((349, 380), (351, 380), (352, 400), (347, 400)))
         
-        pygame.draw.polygon(screen, (255,0,0), [[50,100],[0,200],[200,200],[100,50]], 5)
-        
         pygame.display.flip()
 
     clock.tick(60)
