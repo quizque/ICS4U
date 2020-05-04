@@ -1,5 +1,5 @@
 import pygame
-import data.engine as e
+import engine as e
 import sys
 
 # Load game assets ------------------------------------------------#

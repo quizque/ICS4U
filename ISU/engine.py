@@ -7,7 +7,7 @@ import pygame
 from pygame.locals import *
 
 # Import mouse module
-import data.mouse as m
+import mouse as m
 
 # Import other modules
 import sys, os, math, textwrap
@@ -125,14 +125,14 @@ def draw_dialogbox():
 def text_dialogbox(actor, text):
 
     # While user hasn't pressed next
-    tmp_running = True
-    while tmp_running:
+    while True:
 
         # Run engine pre update
         pre_update()
 
         # Draw dialog box with name and text
         draw_dialogbox()
+        asset_arrow.set_alpha(255)
         screen.blit(asset_arrow, (965 - math.fabs(math.sin(math.sin(pygame.time.get_ticks()/500))*10), 615))
         
         if not len(actor) == 0:
@@ -148,7 +148,7 @@ def text_dialogbox(actor, text):
         # If the mouse is in range and we have pressed the button once
         if m.inRange(955, 615, asset_arrow.get_size() + (10, 0)) and m.pressed_once():
             # exit loop
-            tmp_running = False
+            return
 
         # Run engine post update
         post_update()
