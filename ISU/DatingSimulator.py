@@ -1,5 +1,5 @@
 import pygame
-import engine as e
+import Engine as e
 import sys
 
 # Load game assets ------------------------------------------------#
@@ -13,7 +13,6 @@ girl = e.load_actor("girl")
 music = e.load_audio("music", 0.05)
 
 background = e.load_background("hallway")
-e._current_background = background
 
 music.play(-1)
 
@@ -21,12 +20,19 @@ music.play(-1)
 
 while True:
 
-    e.pre_update()
+    e._current_background = background
     
+    
+
     e.text_dialogbox("???", "Hey, what makes you think you can barge in on my turf!?")
     
     e.add_actor(boy["default"])
-    e.text_dialogbox("???", "I'm just kidding.")
+    e.text_dialogbox("???", "I am pooping my pants")
+
+    input_t = e.draw_ask_dialogbox(["( ͡° ͜ʖ ͡°)", "ewwwww!"])
+
+    if input_t == "*poop pants too*":
+        e.text_dialogbox("Duncan", "Kinky")
     
     e.text_dialogbox("Duncan", "Hi, i'm Duncan. No need to run away scared. Welcome to the school. What class do you have?")
     
@@ -35,5 +41,3 @@ while True:
     e.text_dialogbox("Duncan", "You are with Mr. Veeman on the third floor... room 368")
     e.text_dialogbox("Duncan", "Want me to walk you there?")
     e.clear_actors()
-
-    e.post_update()
