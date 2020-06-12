@@ -1,6 +1,6 @@
 # If the file is being ran directly, exit
 if __name__=="__main__":
-    exit()
+    exit("Run DatingSimulator.py!")
 
 # Import pygame modules
 import pygame
@@ -158,7 +158,121 @@ def text_dialogbox(actor, text):
         # Run engine post update
         post_update()
 
+def draw_ask_dialogbox(options):
+    # Used for smoothing
+    prev_pos = 514
 
+    while True:
+
+        # Run engine pre update
+        pre_update()
+
+        # draw background and actors
+        draw_active_background()
+        draw_active_actors()
+
+        # Draw dialog box with name and text
+        draw_dialogbox()
+        
+        for i in range(len(options)):
+            if m.inRange(225,505+34*i, font_textbox.size(options[i])):
+                if pygame.mouse.get_pressed()[0]:
+                    button_select.play()    
+                    return options[i]
+                screen.blit(font_textbox.render(options[i], 1, (255, 0, 255)), (225,506+33*i))
+
+            else:
+                screen.blit(font_textbox.render(options[i], 1, (255, 255, 255)), (225,506+33*i))
+
+        max_v = max(min(pygame.mouse.get_pos()[1], 514 + 25*len(options)+(8*(len(options)-2))), 514+8)
+
+        active = (max_v - prev_pos) * 0.1 + prev_pos
+        prev_pos = active
+
+        screen.blit(asset_arrow, (195, active - 8))# 615
+
+        
+        
+
+        # Run engine post update
+        post_update()
+
+card_title    = load_font("textbox", 80)
+card_subtitle = load_font("textbox", 35)
+
+# Fade in card
+def fade_in_card(title, subtitle):
+    
+    tmpalpha = 0
+
+
+    s = pygame.Surface((1170, 658))
+    s.fill((0,0,0))
+
+    draw_textCenterSurface(title, card_title, (255, 255, 255), (585,300), s)
+    draw_textCenterSurface(subtitle, card_subtitle, (225, 225, 225), (585,440), s)
+
+    s.set_alpha(tmpalpha)  
+
+    stage = 0
+    timer = 0
+
+
+    while True:
+        pre_update()
+        draw_active_background()
+        draw_active_actors()
+
+
+        screen.blit(s, (0,0))
+
+        if pygame.time.get_ticks() % 1 == 0 and stage == 0:
+            tmpalpha += 2
+            s.set_alpha(tmpalpha)
+            if tmpalpha >= 255:
+                stage = 1
+                return
+
+
+        post_update()
+
+# Fade in card
+def fade_out_card(title, subtitle):
+    
+    tmpalpha = 255
+
+
+    s = pygame.Surface((1170, 658))
+    s.fill((0,0,0))
+
+    draw_textCenterSurface(title, card_title, (255, 255, 255), (585,300), s)
+    draw_textCenterSurface(subtitle, card_subtitle, (225, 225, 225), (585,440), s)
+
+    s.set_alpha(tmpalpha)  
+
+    timer = pygame.time.get_ticks() + 2500
+    stage = 0
+
+
+    while True:
+        pre_update()
+        draw_active_background()
+        draw_active_actors()
+
+
+        screen.blit(s, (0,0))
+
+        if stage == 0 and pygame.time.get_ticks() >= timer:
+            stage = 1
+
+        if pygame.time.get_ticks() % 1 == 0 and stage == 1:
+            tmpalpha -= 2
+            s.set_alpha(tmpalpha)
+            if tmpalpha <= 0:
+                return
+
+
+        post_update()
 
 def draw_ask_dialogbox(options):
     # Used for smoothing
@@ -179,6 +293,7 @@ def draw_ask_dialogbox(options):
         for i in range(len(options)):
             if m.inRange(225,505+34*i, font_textbox.size(options[i])):
                 if pygame.mouse.get_pressed()[0]:
+                    button_select.play()    
                     return options[i]
                 screen.blit(font_textbox.render(options[i], 1, (255, 0, 255)), (225,506+33*i))
 
@@ -197,6 +312,8 @@ def draw_ask_dialogbox(options):
 
         # Run engine post update
         post_update()
+
+    
 
 # Actor draw functions --------------------------------------------#
 
@@ -321,6 +438,9 @@ def clear_actors():
 
 def draw_textCenter(text, font, color, position):
     screen.blit(font.render(text, True, color),(position[0] - font.size(text)[0]//2, position[1] - font.size(text)[1]//2))
+
+def draw_textCenterSurface(text, font, color, position, _surface):
+    _surface.blit(font.render(text, True, color),(position[0] - font.size(text)[0]//2, position[1] - font.size(text)[1]//2))
 
 # pre update function
 # run this before drawing to the screen
